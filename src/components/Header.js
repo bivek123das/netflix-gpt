@@ -75,10 +75,27 @@ const Header = () => {
             </select>
           }
           
-            {!showMovieDes ? <button  className='text-white bg-purple-500 m-2 px-2 md:px-4 text-sm md:text-md  py-1 md:py-1 rounded-lg' onClick={hanldeGptSearchClick}>{showGptSearch ? "HomePage" : "SearchPage"}</button>:<button  className='text-white bg-purple-500 m-2 px-2 md:px-4 text-sm md:text-md  py-1 md:py-1  rounded-lg'  onClick={() =>  {dispatch(toggleGptSearchView());  dispatch(toggleGptMovieView()); }}>Homepage</button>}
+            {!showMovieDes ? (
+              <button
+                className='text-white bg-purple-500 hover:bg-purple-400/90 transition-colors duration-200 shadow-md border border-white/20 m-2 px-2 md:px-5 text-sm md:text-md py-1 rounded-full'
+                onClick={hanldeGptSearchClick}
+              >
+                {showGptSearch ? "HomePage" : "SearchPage"}
+              </button>
+            ) : (
+              <button
+                className='text-white bg-purple-500 hover:bg-purple-400/90 transition-colors duration-200 shadow-md border border-white/20 m-2 px-2 md:px-5 text-sm md:text-md py-1 rounded-full'
+                onClick={() => {
+                  dispatch(toggleGptSearchView());
+                  dispatch(toggleGptMovieView());
+                }}
+              >
+                Homepage
+              </button>
+            )}
 
 
-           <img className='hidden w-12 h-12 md:block ' src={user?.photoURL} alt="user-icon"/>
+           <img className='hidden w-12 h-12 md:block rounded-full border-2 border-white shadow-lg object-cover' src={user?.photoURL} alt="user-icon"/>
            <button onClick={handleSignOut} className='font-bold text-sm md:text-md text-white'>(SignOut)</button>
         </div>}
     </div>
