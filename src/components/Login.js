@@ -8,6 +8,10 @@ import { addUser } from '../utils/store/userSlice';
 import { BG_URL, USER_AVATAR} from '../utils/constants';
 import Particle from '../utils/Particle';
 
+const DEFAULT_EMAIL = "guest@example.com";
+const DEFAULT_PASSWORD = "Guest123das@";
+const DEFAULT_NAME = "Guest User";
+
 
 
 const Login = () => {
@@ -19,7 +23,6 @@ const Login = () => {
   const email = useRef(null);
   const password = useRef(null);
   const name = useRef(null);
-
 
 
   const handleClick =()=>{
@@ -95,11 +98,11 @@ const Login = () => {
        <form onSubmit={(e)=> e.preventDefault()} className='w-full   md:w-6/12 lg:w-3/12 absolute my-36 mx-auto right-0 left-0 p-10 bg-black text-white rounded-lg bg-opacity-80'>
            <h1 className='text-3xl py-4 font-bold'>{isSigInForm ? "Sign In":"Sign Up"}</h1>
            
-           {!isSigInForm &&  <input  ref={name} type="text" placeholder='FullName' className='p-4 my-2 w-full bg-gray-700 outline-none'/>}
+           {!isSigInForm &&  <input  ref={name} type="text" placeholder='FullName' className='p-4 my-2 w-full bg-gray-700 outline-none' defaultValue={DEFAULT_NAME}/>}
 
-           <input ref={email} type="text" placeholder='Email Address' className='p-4 my-2 w-full bg-gray-700 outline-none'/>
+           <input ref={email} type="text" placeholder='Email Address' className='p-4 my-2 w-full bg-gray-700 outline-none' defaultValue={DEFAULT_EMAIL}/>
 
-           <input ref={password} type="password" placeholder='Password' className='p-4 my-2 w-full bg-gray-700 outline-none' />
+           <input ref={password} type="password" placeholder='Password' className='p-4 my-2 w-full bg-gray-700 outline-none' defaultValue={DEFAULT_PASSWORD}/>
 
            <p className='text-red-700 font-bold'>{errorMessage}</p>
 
