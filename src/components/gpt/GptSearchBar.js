@@ -11,25 +11,37 @@ const GptSearchBar = () => {
     const dispatch = useDispatch();
     const [errorMessage, setErrorMessage] = useState(null);
 
-    const handleGptSearchClick = async ()=>{
-        const moviename= searchText.current.value.trim();
-
-        const response = await fetch('https://api.themoviedb.org/3/search/movie?query='+moviename+'&include_adult=false&language=en-US&page=1', API_OPTIONS)
-
-        const data = await response.json();
-        console.log(moviename, data);
-        
-        if(!data.results || data.results.length === 0) {
-            setErrorMessage(`No movies found for "${moviename}". Please try a different search term.`);
-            dispatch(addgptMovies({gptMovieName: moviename, gptMovieResults: []}));
-        } else {
-            setErrorMessage(null);
-            dispatch(addgptMovies({gptMovieName: moviename, gptMovieResults: data.results}));
-        }
-        
-        // Clear the input field after search
-        searchText.current.value = '';
-        } 
+    const handleGptSearchClick = async () => {
+      const moviename = searchText.current.value.trim();
+  
+      // 🔴 Check if input is empty
+      if (!moviename) {
+          alert("Please enter a movie name.");   // <-- popup message
+          setErrorMessage("Please enter a movie name.");
+          return;   // stop further execution
+      }
+  
+      const response = await fetch(
+          'https://api.themoviedb.org/3/search/movie?query=' +
+          moviename +
+          '&include_adult=false&language=en-US&page=1',
+          API_OPTIONS
+      );
+  
+      const data = await response.json();
+      console.log(moviename, data);
+  
+      if (!data.results || data.results.length === 0) {
+          setErrorMessage(`No movies found for "${moviename}". Please try a different search term.`);
+          dispatch(addgptMovies({ gptMovieName: moviename, gptMovieResults: [] }));
+      } else {
+          setErrorMessage(null);
+          dispatch(addgptMovies({ gptMovieName: moviename, gptMovieResults: data.results }));
+      }
+  
+      searchText.current.value = '';
+  };
+  
     
 
   return (
