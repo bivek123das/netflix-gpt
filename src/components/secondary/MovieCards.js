@@ -18,8 +18,8 @@ const MovieCards = ({posterPath, movieId}) => {
     }
 
   return (
-    <div className='w-36 md:w-48 p-4 md:pr-4 cursor-pointer'>
-        <img onClick={handleMovieCard} alt="Movie-card" src={'https://image.tmdb.org/t/p/w500/'+posterPath}/>
+    <div className='w-28 sm:w-32 md:w-36 lg:w-48 flex-shrink-0 p-1 sm:p-2 md:p-4 cursor-pointer transition-transform hover:scale-105'>
+        <img onClick={handleMovieCard} alt="Movie-card" className='w-full h-auto rounded-md' src={'https://image.tmdb.org/t/p/w500/'+posterPath}/>
     </div>
   )
 }

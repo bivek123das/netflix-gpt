@@ -12,9 +12,11 @@ const GptSearch = () => {
             <Particle/>
        </div>
 
-       <div className=''>
+       <div className='flex flex-col'>
          <GptSearchBar/>
-         <GptMovieSuggestions/>
+         <div className='mt-4 sm:mt-6 md:mt-8'>
+           <GptMovieSuggestions/>
+         </div>
         </div> 
     </>
   )

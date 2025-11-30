@@ -11,6 +11,7 @@ const gptSlice = createSlice({
         gptMovieDetails: null,
         trailerId : null,
         trailerVideoOne: null,
+        trailerError: null,
     },
     reducers : {
         toggleGptSearchView: (state)=>{
@@ -33,9 +34,17 @@ const gptSlice = createSlice({
         },
         addTrailerMovie: (state,action) => {
             state.trailerVideoOne = action.payload;
+            state.trailerError = null;
+        },
+        setTrailerError: (state, action) => {
+            state.trailerError = action.payload;
+            state.trailerVideoOne = null;
+        },
+        clearTrailerError: (state) => {
+            state.trailerError = null;
         }
     }
 })
 
-export const {toggleGptSearchView, toggleGptMovieView ,addgptMovies, setMovieDetails, addTrailerId, addTrailerMovie } = gptSlice.actions;
+export const {toggleGptSearchView, toggleGptMovieView ,addgptMovies, setMovieDetails, addTrailerId, addTrailerMovie, setTrailerError, clearTrailerError } = gptSlice.actions;
 export default gptSlice.reducer;

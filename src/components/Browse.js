@@ -19,22 +19,36 @@ const Browse = () => {
   useUpcomingMovies();
   
   const {showGptSearch, showMovieDes}= useSelector((store) => store.gpt);
-   const dispatch = useDispatch();
+  const movies = useSelector((store) => store.movies);
+  const dispatch = useDispatch();
 
    const goToGptSearch = ()=>{
        dispatch(toggleGptMovieView());
    }
 
+  const isLoading = !movies?.nowPlayingMovies;
+
   return (
     <div>
       <Header/>
 
-      {showGptSearch ? (
-        showMovieDes ? <AboutMovie goToGptSearch={goToGptSearch}/> : <GptSearch/>
+      {isLoading ? (
+        <div className='fixed inset-0 bg-black flex items-center justify-center z-50'>
+          <div className='text-center'>
+            <div className='w-16 h-16 border-4 border-red-600 border-t-transparent rounded-full animate-spin mx-auto mb-4'></div>
+            <p className='text-white text-xl font-semibold'>Loading your favorite movies...</p>
+          </div>
+        </div>
       ) : (
         <>
-          <MainContainer />
-          <SecondaryContainer />
+          {showGptSearch ? (
+            showMovieDes ? <AboutMovie goToGptSearch={goToGptSearch}/> : <GptSearch/>
+          ) : (
+            <>
+              <MainContainer />
+              <SecondaryContainer />
+            </>
+          )}
         </>
       )}
 

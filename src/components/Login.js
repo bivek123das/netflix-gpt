@@ -18,6 +18,7 @@ const Login = () => {
   
   const [isSigInForm, setIsSignInForm] = useState(true);
   const [errorMessage,setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const email = useRef(null);
@@ -36,6 +37,9 @@ const Login = () => {
     //  password.current.value = '';
 
      if(message) return ;
+
+     setIsLoading(true);
+     setErrorMessage(null);
 
      if(!isSigInForm){
       createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
@@ -56,9 +60,11 @@ const Login = () => {
               photoURL: photoURL,
             })
           );
+          setIsLoading(false);
         }).catch((error) => {
           // An error occurred
           setErrorMessage(error.message)
+          setIsLoading(false);
         });
         // ...
       })
@@ -66,6 +72,7 @@ const Login = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         setErrorMessage(errorCode+ "-" + errorMessage);
+        setIsLoading(false);
         // ..
       });
      }else{
@@ -74,12 +81,14 @@ const Login = () => {
         // Signed in 
         const user = userCredential.user;
         console.log(user);
+        setIsLoading(false);
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         setErrorMessage(errorCode+ "-" + errorMessage);
+        setIsLoading(false);
       });
      }
   }
@@ -89,25 +98,39 @@ const Login = () => {
   }
 
   return (
-    <div className='relative'>
+    <div className='relative min-h-screen flex items-center justify-center'>
        <Header/>
-       <div className='absolute'>
-        <img className='h-screen object-cover w-screen' src={BG_URL}  alt="logo"/>
+       <div className='fixed inset-0 -z-10'>
+        <img className='h-full w-full object-cover' src={BG_URL}  alt="logo"/>
         <Particle/>
        </div>
-       <form onSubmit={(e)=> e.preventDefault()} className='w-full   md:w-6/12 lg:w-3/12 absolute my-36 mx-auto right-0 left-0 p-10 bg-black text-white rounded-lg bg-opacity-80'>
-           <h1 className='text-3xl py-4 font-bold'>{isSigInForm ? "Sign In":"Sign Up"}</h1>
+       
+       <form onSubmit={(e)=> e.preventDefault()} className='w-[90%] sm:w-4/5 md:w-2/3 lg:w-1/2 xl:w-2/5 2xl:w-1/3 max-w-md mx-auto mt-16 sm:mt-20 md:mt-0 p-6 sm:p-8 md:p-10 bg-black text-white rounded-lg bg-opacity-80 backdrop-blur-sm shadow-2xl'>
+           <h1 className='text-2xl sm:text-3xl md:text-4xl py-3 sm:py-4 font-bold text-center'>{isSigInForm ? "Sign In":"Sign Up"}</h1>
            
-           {!isSigInForm &&  <input  ref={name} type="text" placeholder='FullName' className='p-4 my-2 w-full bg-gray-700 outline-none' defaultValue={DEFAULT_NAME}/>}
+           {!isSigInForm &&  <input  ref={name} type="text" placeholder='FullName' className='p-3 sm:p-4 my-2 w-full bg-gray-700 outline-none rounded text-sm sm:text-base placeholder-gray-400 focus:bg-gray-600 transition-colors' defaultValue={DEFAULT_NAME}/>}
 
-           <input ref={email} type="text" placeholder='Email Address' className='p-4 my-2 w-full bg-gray-700 outline-none' defaultValue={DEFAULT_EMAIL}/>
+           <input ref={email} type="text" placeholder='Email Address' className='p-3 sm:p-4 my-2 w-full bg-gray-700 outline-none rounded text-sm sm:text-base placeholder-gray-400 focus:bg-gray-600 transition-colors' defaultValue={DEFAULT_EMAIL}/>
 
-           <input ref={password} type="password" placeholder='Password' className='p-4 my-2 w-full bg-gray-700 outline-none' defaultValue={DEFAULT_PASSWORD}/>
+           <input ref={password} type="password" placeholder='Password' className='p-3 sm:p-4 my-2 w-full bg-gray-700 outline-none rounded text-sm sm:text-base placeholder-gray-400 focus:bg-gray-600 transition-colors' defaultValue={DEFAULT_PASSWORD}/>
 
-           <p className='text-red-700 font-bold'>{errorMessage}</p>
+           <p className='text-red-400 font-bold text-xs sm:text-sm min-h-[20px]'>{errorMessage}</p>
 
-           <button className='p-4 my-4 font-bold bg-red-700 w-full rounded-lg' onClick={handleClick}>{isSigInForm ? "Sign In":"Sign Up"}</button>
-           <p className='py-4 cursor-pointer' onClick={toggleClick}>{isSigInForm ? "New to Netflix? Sign up now.":"Already Registered? Sign In Now"}</p>
+           <button 
+             className='p-3 sm:p-4 my-3 sm:my-4 font-bold bg-red-700 w-full rounded-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-sm sm:text-base hover:bg-red-600 transition-colors shadow-lg hover:shadow-red-500/50' 
+             onClick={handleClick}
+             disabled={isLoading}
+           >
+             {isLoading ? (
+               <div className='flex items-center gap-2'>
+                 <div className='w-4 h-4 sm:w-5 sm:h-5 border-2 border-white border-t-transparent rounded-full animate-spin'></div>
+                 <span>Loading...</span>
+               </div>
+             ) : (
+               isSigInForm ? "Sign In" : "Sign Up"
+             )}
+           </button>
+           <p className='py-3 sm:py-4 cursor-pointer text-xs sm:text-sm text-center hover:text-red-400 transition-colors' onClick={toggleClick}>{isSigInForm ? "New to Netflix? Sign up now.":"Already Registered? Sign In Now"}</p>
        </form>
     </div>
   )
