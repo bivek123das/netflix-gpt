@@ -11,7 +11,8 @@ export const API_OPTIONS = {
     Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmZmNhMGQ4YjI1NGE0NjI0M2NjYmY1N2IxNWU0NzlkMiIsIm5iZiI6MTcyNTYwOTUyNy45MzkyMDgsInN1YiI6IjY2ZGE3M2M5NDU0YzFiNzZlN2M1ZGVhMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.WnSEQfnyzNVSbDzn8FgnHGopiLYNCfqskN45qJCrMe4'
   }
 };
-
+export const YOUTUBE_API_KEY = "AIzaSyBRft_91mS3ikPgOaS7MTqvqcTy1W-b-v8";
+export const OMDB_KEY = "4fe26d2e";
 
 export const SUPPORTED_LANGUAGES = [
   {identifier:'en',name:'English'},
